@@ -1,3 +1,7 @@
+<script setup>
+
+</script>
+
 <!-- <template>
     <div class="container py-5">
       <h2 class="fw-bold mb-4">Dịch vụ</h2>
@@ -70,7 +74,7 @@
                 <i class="bi bi-star-fill text-warning"></i>
                 <span class="ms-2">Đánh giá</span>
               </div>
-              <button class="btn btn-warning mt-3 w-100 animate-button">Đặt lịch ngay</button>
+              <RouterLink class="btn btn-warning mt-3 w-100 animate-button" to="/dat-lich">Đặt lịch ngay</RouterLink>
             </div>
           </div>
         </div>

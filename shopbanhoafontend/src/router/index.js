@@ -1,3 +1,4 @@
+import DatLich from '@/pages/DatLich.vue'
 import DichVuDetail from '@/pages/DichVuDetail.vue'
 import DichVuPage from '@/pages/DichVuPage.vue'
 import GioHang from '@/pages/GioHang.vue'
@@ -37,6 +38,11 @@ const router = createRouter({
       path: '/gio-hang',
       name: 'gio-hang',
       component: GioHang,
+    },
+    {
+      path: '/dat-lich',
+      name: 'dat-lich',
+      component: DatLich,
     },
     // {
     //   path: '/about',

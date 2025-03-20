@@ -18,7 +18,7 @@
             <i class="bi bi-star-fill text-warning mx-1"></i>
             <span class="ms-2">({{ service.reviews.length }} đánh giá)</span>
           </div>
-          <button class="btn btn-warning mt-3 w-100 animate-button">🗓 Đặt lịch ngay</button>
+          <RouterLink class="btn btn-warning mt-3 w-100 animate-button" to="/dat-lich">🗓 Đặt lịch ngay</RouterLink>
         </div>
       </div>
   
@@ -65,6 +65,8 @@
   </template>
   
   <script>
+import { RouterLink } from 'vue-router';
+
   export default {
     data() {
       return {
