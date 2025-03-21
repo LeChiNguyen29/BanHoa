@@ -1,7 +1,7 @@
-CREATE DATABASE DatLichCatToc;
+CREATE DATABASE WebsiteDatLichCatToc;
 GO
 
-USE DatLichCatToc;
+USE WebsiteDatLichCatToc;
 GO
 
 -- Bảng người dùng
@@ -47,9 +47,9 @@ CREATE TABLE ky_thuat_vien (
 CREATE TABLE dat_lich (
     id INT IDENTITY(1,1) PRIMARY KEY,
     nguoi_dung_id INT FOREIGN KEY REFERENCES nguoi_dung(id) ON DELETE CASCADE,
-    salon_id INT FOREIGN KEY REFERENCES salon(id) ON DELETE CASCADE,
+    salon_id INT FOREIGN KEY REFERENCES salon(id) ON DELETE NO ACTION,
     ky_thuat_vien_id INT FOREIGN KEY REFERENCES ky_thuat_vien(id) ON DELETE SET NULL,
-    dich_vu_id INT FOREIGN KEY REFERENCES dich_vu(id) ON DELETE CASCADE,
+    dich_vu_id INT FOREIGN KEY REFERENCES dich_vu(id) ON DELETE NO ACTION,
     thoi_gian_hen DATETIME NOT NULL,
     trang_thai NVARCHAR(50) CHECK (trang_thai IN ('cho_xac_nhan', 'da_xac_nhan', 'hoan_thanh', 'huy')) DEFAULT 'cho_xac_nhan',
     ngay_tao DATETIME DEFAULT GETDATE()
@@ -103,30 +103,53 @@ CREATE TABLE danh_gia (
 );
 
 -- Thêm dữ liệu mẫu
-INSERT INTO nguoi_dung (ho_ten, so_dien_thoai, email, mat_khau, vai_tro) VALUES 
-('Nguyen Van A', '0987654321', 'nguyenvana@gmail.com', 'password123', 'khach_hang'),
-('Tran Thi B', '0912345678', 'tranthib@gmail.com', 'password456', 'quan_tri');
 
-INSERT INTO salon (ten_salon, dia_chi, thanh_pho, quan_huyen, so_dien_thoai) VALUES 
-('Salon A', '123 Đường ABC', 'Hà Nội', 'Cầu Giấy', '0123456789'),
-('Salon B', '456 Đường XYZ', 'TP.HCM', 'Quận 1', '0987654321');
+-- Thêm người dùng
+INSERT INTO nguoi_dung (ho_ten, so_dien_thoai, email, mat_khau, vai_tro) VALUES
+('Nguyen Van A', '0987654321', 'a@gmail.com', '123456', 'khach_hang'),
+('Tran Thi B', '0978654321', 'b@gmail.com', '123456', 'quan_tri');
 
-INSERT INTO dich_vu (ten_dich_vu, gia, thoi_gian, salon_id) VALUES 
-('Cắt tóc nam', 150000, 30, 1),
-('Gội đầu dưỡng sinh', 80000, 20, 2);
+-- Thêm salon
+INSERT INTO salon (ten_salon, dia_chi, thanh_pho, quan_huyen, so_dien_thoai) VALUES
+('Salon A', '123 Duong ABC', 'Ha Noi', 'Dong Da', '0123456789'),
+('Salon B', '456 Duong XYZ', 'HCM', 'Quan 1', '0987654321');
 
-INSERT INTO ky_thuat_vien (ho_ten, so_dien_thoai, salon_id) VALUES 
-('Le Van C', '0934567890', 1),
-('Pham Thi D', '0976543210', 2);
+-- Thêm dịch vụ
+INSERT INTO dich_vu (ten_dich_vu, gia, mo_ta, salon_id) VALUES
+('Cat toc nam', 100000, 'Dich vu cat toc danh cho nam', 1),
+('Cat toc nu', 150000, 'Dich vu cat toc danh cho nu', 2);
 
-INSERT INTO san_pham (ten_san_pham, mo_ta, gia, so_luong, salon_id) VALUES 
-('Dầu gội X', 'Dầu gội dưỡng tóc', 200000, 50, 1),
-('Gôm Xịt Tóc Y', 'Giữ nếp lâu dài', 150000, 30, 2);
+-- Thêm kỹ thuật viên
+INSERT INTO ky_thuat_vien (ho_ten, so_dien_thoai, salon_id) VALUES
+('Le Van C', '0912345678', 1),
+('Pham Thi D', '0923456789', 2);
 
-INSERT INTO don_hang (nguoi_dung_id, tong_tien, trang_thai) VALUES 
-(1, 350000, 'da_thanh_toan');
+-- Thêm đặt lịch
+INSERT INTO dat_lich (nguoi_dung_id, salon_id, ky_thuat_vien_id, dich_vu_id, thoi_gian_hen, trang_thai) VALUES
+(1, 1, 1, 1, '2025-03-25 10:00:00', 'cho_xac_nhan'),
+(2, 2, 2, 2, '2025-03-26 15:00:00', 'da_xac_nhan');
 
-INSERT INTO chi_tiet_don_hang (don_hang_id, san_pham_id, so_luong, gia) VALUES 
+-- Thêm sản phẩm
+INSERT INTO san_pham (ten_san_pham, salon_id) VALUES
+('Dau goi cao cap', 1),
+('Gom vuot toc', 2);
+
+-- Thêm sản phẩm chi tiết
+INSERT INTO san_pham_chi_tiet (san_pham_id, kich_thuoc, mo_ta, gia, so_luong, ngay_san_xuat, han_su_dung) VALUES
+(1, '500ml', 'Dau goi chong rung toc', 200000, 50, '2025-01-01', '2026-01-01'),
+(2, '100g', 'Gom vuot toc giu nep', 150000, 30, '2025-02-01', '2026-02-01');
+
+-- Thêm đơn hàng
+INSERT INTO don_hang (nguoi_dung_id, tong_tien, trang_thai) VALUES
+(1, 200000, 'cho_thanh_toan'),
+(2, 150000, 'da_thanh_toan');
+
+-- Thêm chi tiết đơn hàng
+INSERT INTO chi_tiet_don_hang (don_hang_id, san_pham_id, so_luong, gia) VALUES
 (1, 1, 1, 200000),
-(1, 2, 1, 150000);
+(2, 2, 1, 150000);
 
+-- Thêm đánh giá
+INSERT INTO danh_gia (nguoi_dung_id, salon_id, diem_danh_gia, binh_luan) VALUES
+(1, 1, 5, 'Dich vu rat tot!'),
+(2, 2, 4, 'Nhiet tinh, phuc vu chu dao!');
