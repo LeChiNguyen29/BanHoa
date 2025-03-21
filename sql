@@ -101,3 +101,32 @@ CREATE TABLE danh_gia (
     binh_luan NVARCHAR(1000) NULL,
     ngay_tao DATETIME DEFAULT GETDATE()
 );
+
+-- Thêm dữ liệu mẫu
+INSERT INTO nguoi_dung (ho_ten, so_dien_thoai, email, mat_khau, vai_tro) VALUES 
+('Nguyen Van A', '0987654321', 'nguyenvana@gmail.com', 'password123', 'khach_hang'),
+('Tran Thi B', '0912345678', 'tranthib@gmail.com', 'password456', 'quan_tri');
+
+INSERT INTO salon (ten_salon, dia_chi, thanh_pho, quan_huyen, so_dien_thoai) VALUES 
+('Salon A', '123 Đường ABC', 'Hà Nội', 'Cầu Giấy', '0123456789'),
+('Salon B', '456 Đường XYZ', 'TP.HCM', 'Quận 1', '0987654321');
+
+INSERT INTO dich_vu (ten_dich_vu, gia, thoi_gian, salon_id) VALUES 
+('Cắt tóc nam', 150000, 30, 1),
+('Gội đầu dưỡng sinh', 80000, 20, 2);
+
+INSERT INTO ky_thuat_vien (ho_ten, so_dien_thoai, salon_id) VALUES 
+('Le Van C', '0934567890', 1),
+('Pham Thi D', '0976543210', 2);
+
+INSERT INTO san_pham (ten_san_pham, mo_ta, gia, so_luong, salon_id) VALUES 
+('Dầu gội X', 'Dầu gội dưỡng tóc', 200000, 50, 1),
+('Gôm Xịt Tóc Y', 'Giữ nếp lâu dài', 150000, 30, 2);
+
+INSERT INTO don_hang (nguoi_dung_id, tong_tien, trang_thai) VALUES 
+(1, 350000, 'da_thanh_toan');
+
+INSERT INTO chi_tiet_don_hang (don_hang_id, san_pham_id, so_luong, gia) VALUES 
+(1, 1, 1, 200000),
+(1, 2, 1, 150000);
+
